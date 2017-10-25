@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: bs-dreamport-user
+  http:
+    encoding: { charset: UTF-8, enable: true, force: true }
+
+info:
+  app: bs-dreamport-user
+  component: Service
+  description: Base Service.

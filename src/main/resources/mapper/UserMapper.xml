@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dreamport.service.mapper.UserMapper">
+    <sql id="userTable">t_user</sql>
+
+    <!-- 新建用户 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.dreamport.domain.User">
+        insert into
+        <include refid="userTable"/>
+        (username,password,real_name,gender,mobile_phone,email,salt,locked,create_date,state)
+        values
+        (#{username},#{password},#{realName},#{gender},#{mobilePhone},#{email},#{salt},#{locked},now(),#{state})
+    </insert>
+
+    <!-- 获取用户列表 -->
+    <select id="list" parameterType="com.dreamport.bo.UserBO" resultType="com.dreamport.domain.User">
+        select * from
+        <include refid="userTable"/>
+        <where>
+            <if test="username != null">
+                AND username LIKE CONCAT('%',#{username},'%')
+            </if>
+            <if test="realName != null">
+                AND real_name LIKE CONCAT('%',#{realName},'%')
+            </if>
+            <if test="mobilePhone != null">
+                AND mobile_phone LIKE CONCAT('%',#{mobilePhone},'%')
+            </if>
+        </where>
+    </select>
+</mapper>
