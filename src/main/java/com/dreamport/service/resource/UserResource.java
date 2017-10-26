@@ -41,8 +41,8 @@ public class UserResource {
     @Path("/{pageNo}")
     @ApiOperation(value = "用户管理-获取用户列表-分页", httpMethod = "GET", notes = "用户管理-获取用户列表")
     public Page<User> selectUserPage(@BeanParam UserBO param,
-                           @ApiParam(value = "页码", defaultValue = "1") @PathParam(value = "pageNo") Integer pageNo,
-                           @ApiParam(value = "每页条数", defaultValue = "10") @QueryParam("pageSize") Integer pageSize) {
+                                     @ApiParam(value = "页码", defaultValue = "1") @PathParam(value = "pageNo") Integer pageNo,
+                                     @ApiParam(value = "每页条数", defaultValue = "10") @QueryParam("pageSize") Integer pageSize) {
         return userService.selectUserPage(new Page<User>(pageNo, pageSize), param);
     }
 
@@ -50,5 +50,19 @@ public class UserResource {
     @ApiOperation(value = "用户管理-保存用户", httpMethod = "POST", notes = "用户管理-保存用户")
     public int insert(@RequestBody User user) {
         return userService.insert(user);
+    }
+
+    /*@GET
+    @Path("/{id}")
+    @ApiOperation(value = "用户管理-根据ID获取用户", httpMethod = "GET", notes = "用户管理-根据ID获取用户")
+    public User selectById(@ApiParam(value = "用户id", defaultValue = "1") @PathParam("id") Integer id) {
+        return userService.selectById(id);
+    }*/
+
+    @DELETE
+    @Path("/{id}")
+    @ApiOperation(value = "用户管理-删除用户", httpMethod = "DELETE", notes = "用户管理-删除用户")
+    public int deleteById(@ApiParam(value = "用户id") @PathParam("id") Long id) {
+        return userService.deleteById(id);
     }
 }

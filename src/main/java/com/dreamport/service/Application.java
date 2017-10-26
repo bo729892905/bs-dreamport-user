@@ -18,9 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @SpringBootApplication
 @EnableEurekaClient
-@EnableFeignClients
 @ComponentScan(basePackages = {"com.dreamport"})
-@MapperScan("com.dreamport.service.mapper")
 @ServletComponentScan(basePackages = {"com.dreamport.service.config"})
 @EnableTransactionManagement
 public class Application implements CommandLineRunner {
