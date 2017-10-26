@@ -1,5 +1,6 @@
 package com.dreamport.service.service;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.dreamport.bo.UserBO;
 import com.dreamport.domain.User;
 
@@ -11,5 +12,7 @@ import java.util.List;
 public interface UserService {
     int insert(User entity);
 
-    List<User> list(UserBO param);
+    List<User> selectList(UserBO param);
+
+    Page<User> selectUserPage(Page<User> page, UserBO param);
 }

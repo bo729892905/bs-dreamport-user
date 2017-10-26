@@ -4,16 +4,16 @@
     <sql id="userTable">t_user</sql>
 
     <!-- 新建用户 -->
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.dreamport.domain.User">
+    <!--<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.dreamport.domain.User">
         insert into
         <include refid="userTable"/>
         (username,password,real_name,gender,mobile_phone,email,salt,locked,create_date,state)
         values
         (#{username},#{password},#{realName},#{gender},#{mobilePhone},#{email},#{salt},#{locked},now(),#{state})
-    </insert>
+    </insert>-->
 
     <!-- 获取用户列表 -->
-    <select id="list" parameterType="com.dreamport.bo.UserBO" resultType="com.dreamport.domain.User">
+    <select id="selectUserList" parameterType="com.dreamport.bo.UserBO" resultType="com.dreamport.domain.User">
         select * from
         <include refid="userTable"/>
         <where>

@@ -1,13 +1,12 @@
 package com.dreamport.service.resource;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.dreamport.bo.UserBO;
 import com.dreamport.domain.User;
 import com.dreamport.service.service.UserService;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,10 +33,17 @@ public class UserResource {
 
     @GET
     @ApiOperation(value = "用户管理-获取用户列表", httpMethod = "GET", notes = "用户管理-获取用户列表")
-    public PageInfo list(@BeanParam UserBO param) {
-        PageHelper.startPage(1, 10);
-        List<User> userList = userService.list(param);
-        return new PageInfo(userList);
+    public List<User> selectList(@BeanParam UserBO param) {
+        return userService.selectList(param);
+    }
+
+    @GET
+    @Path("/{pageNo}")
+    @ApiOperation(value = "用户管理-获取用户列表-分页", httpMethod = "GET", notes = "用户管理-获取用户列表")
+    public Page<User> selectUserPage(@BeanParam UserBO param,
+                           @ApiParam(value = "页码", defaultValue = "1") @PathParam(value = "pageNo") Integer pageNo,
+                           @ApiParam(value = "每页条数", defaultValue = "10") @QueryParam("pageSize") Integer pageSize) {
+        return userService.selectUserPage(new Page<User>(pageNo, pageSize), param);
     }
 
     @POST
