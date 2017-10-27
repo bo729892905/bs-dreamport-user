@@ -1,20 +1,18 @@
 package com.dreamport.service.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.dreamport.bo.UserBO;
+import com.dreamport.common.StateEnum;
 import com.dreamport.domain.User;
 import com.dreamport.service.mapper.UserMapper;
 import com.dreamport.service.service.UserService;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Date;
 
 /**
  * Created by ren.xiaobo on 2017/7/28.
@@ -29,7 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User selectById(Integer id) {
+    public User selectById(Long id) {
         return userMapper.selectById(id);
     }
 
@@ -40,23 +38,15 @@ public class UserServiceImpl implements UserService {
             rollbackFor = Exception.class)
 
     public int insert(User entity) {
-        entity.setState(1);
+        entity.setState(StateEnum.VALID.value());
+        entity.setCreateDate(new Date());
         return userMapper.insert(entity);
     }
 
     @Override
     public int update(User entity) {
-        return 0;
-    }
-
-    @Override
-    public List<User> selectList(UserBO param) {
-        Wrapper<User> wrapper = new EntityWrapper<>();
-        if (StringUtils.isNotBlank(param.getRealName())) {
-            wrapper.like("real_name", param.getRealName());
-        }
-
-        return userMapper.selectList(wrapper);
+        entity.setState(StateEnum.VALID.value());
+        return userMapper.updateById(entity);
     }
 
     @Override

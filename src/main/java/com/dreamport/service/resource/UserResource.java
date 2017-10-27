@@ -9,6 +9,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.ws.rs.*;
@@ -30,34 +31,36 @@ public class UserResource {
         this.userService = userService;
     }
 
-
     @GET
-    @ApiOperation(value = "用户管理-获取用户列表", httpMethod = "GET", notes = "用户管理-获取用户列表")
-    public List<User> selectList(@BeanParam UserBO param) {
-        return userService.selectList(param);
-    }
-
-    @GET
-    @Path("/{pageNo}")
     @ApiOperation(value = "用户管理-获取用户列表-分页", httpMethod = "GET", notes = "用户管理-获取用户列表")
     public Page<User> selectUserPage(@BeanParam UserBO param,
-                                     @ApiParam(value = "页码", defaultValue = "1") @PathParam(value = "pageNo") Integer pageNo,
+                                     @ApiParam(value = "页码", defaultValue = "1") @QueryParam(value = "pageNo") Integer pageNo,
                                      @ApiParam(value = "每页条数", defaultValue = "10") @QueryParam("pageSize") Integer pageSize) {
-        return userService.selectUserPage(new Page<User>(pageNo, pageSize), param);
+        return userService.selectUserPage(new Page<>(pageNo, pageSize), param);
     }
 
     @POST
-    @ApiOperation(value = "用户管理-保存用户", httpMethod = "POST", notes = "用户管理-保存用户")
+    @ApiOperation(value = "用户管理-保存用户", httpMethod = "POST", notes = "用户管理-新建用户")
     public int insert(@RequestBody User user) {
         return userService.insert(user);
     }
 
-    /*@GET
+
+    @PUT
+    @Path("/{id}")
+    @ApiOperation(value = "用户管理-保存用户", httpMethod = "PUT", notes = "用户管理-更新用户")
+    public int update(@PathParam("id") Long id, @RequestBody User user) {
+        Assert.notNull(user.getVersion(), "名称不能为空");
+        user.setId(id);
+        return userService.update(user);
+    }
+
+    @GET
     @Path("/{id}")
     @ApiOperation(value = "用户管理-根据ID获取用户", httpMethod = "GET", notes = "用户管理-根据ID获取用户")
-    public User selectById(@ApiParam(value = "用户id", defaultValue = "1") @PathParam("id") Integer id) {
+    public User selectById(@ApiParam(value = "用户id") @PathParam("id") Long id) {
         return userService.selectById(id);
-    }*/
+    }
 
     @DELETE
     @Path("/{id}")

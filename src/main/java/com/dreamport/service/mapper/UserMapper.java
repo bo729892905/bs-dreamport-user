@@ -1,9 +1,9 @@
 package com.dreamport.service.mapper;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.dreamport.bo.UserBO;
 import com.dreamport.domain.User;
-import com.dreamport.service.common.SuperMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * Created by ren.xiaobo on 2017/7/28.
  */
 @Repository
-public interface UserMapper extends SuperMapper<User> {
+public interface UserMapper extends BaseMapper<User> {
     /**
      * <p>
      * 查询 : 查询用户列表，分页显示
