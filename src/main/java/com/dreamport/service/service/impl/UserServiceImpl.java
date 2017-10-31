@@ -40,7 +40,9 @@ public class UserServiceImpl implements UserService {
     public int insert(User entity) {
         entity.setState(StateEnum.VALID.value());
         entity.setCreateDate(new Date());
-        return userMapper.insert(entity);
+        int result = userMapper.insert(entity);
+        if (result > 0) result = entity.getId().intValue();
+        return result;
     }
 
     @Override
