@@ -38,7 +38,6 @@ spring:
         timeBetweenEvictionRunsMillis: 60000
         minEvictableIdleTimeMillis: 300000
         filters: stat
-        #监控配置
         # WebStatFilter配置
         web-stat-filter:
           enabled: true
@@ -52,13 +51,6 @@ spring:
           login-username: admin
           login-password: admin
         aop-patterns: com.dreamport.service.service.*
-
-
-dreamport:
-  druid:
-    login:
-      username: admin
-      password: admin
 
 #mybatis:
 #  mapperLocations: classpath:mapper/*.xml
