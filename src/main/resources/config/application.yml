@@ -17,6 +17,10 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 
 spring:
+    swagger:
+      title: ${server.display-name}
+      context-path: ${server.context-path}
+      description: ${server.display-name}
     datasource:
       druid:
         #JDBC配置
